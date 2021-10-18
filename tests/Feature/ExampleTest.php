@@ -18,12 +18,7 @@ class ExampleTest extends TestCase
      */
     public function test_hard_dependency()
     {
-        $this->instance(
-            Elastic::class,
-            Mockery::mock(Elastic::class, function (MockInterface $mock) {
-                $mock->shouldReceive('fetchFromElastic')->once()->andReturn("this hard dependency");
-            })
-        );
+        Mockery::mock('overload:' . Elastic::class)->shouldReceive('fetchFromElastic')->once()->andReturn('ini akal akalan ciky');
 
         $response = $this->get('/hard');
 
@@ -34,7 +29,12 @@ class ExampleTest extends TestCase
     
     public function test_dependency_injection()
     {
-        Mockery::mock('overload:' . Elastic::class)->shouldReceive('fetchFromElastic')->once()->andReturn('ini akal akalan ciky');
+        $this->instance(
+            Elastic::class,
+            Mockery::mock(Elastic::class, function (MockInterface $mock) {
+                $mock->shouldReceive('fetchFromElastic')->once()->andReturn("this hard dependency");
+            })
+        );
 
         $response = $this->get('/injection');
 

@@ -14,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (Request $request) {
-    dd($request);
-});
+Route::get('/hard', "ExampleController@hard");
+Route::get('/injection', "ExampleController@injection");
